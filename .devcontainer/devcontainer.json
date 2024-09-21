@@ -1,0 +1,17 @@
+{
+  "name": "DevContainer",
+  "dockerComposeFile": ["docker-compose.yml"],
+  "service": "app",
+  "remoteUser": "node",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "eslint.workingDirectories": ["./app"]
+      },
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    }
+  }
+}
