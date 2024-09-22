@@ -1,5 +1,26 @@
 import "./style.css";
 
+function changeConnectionStatus(isConnected: boolean) {
+  const status = document.getElementById("status")!;
+  if (isConnected) {
+    status.innerText = "✅";
+    status.classList.add("checked");
+  } else {
+    status.innerText = "❌";
+    status.classList.remove("checked");
+  }
+}
+
+// connection check
+// setInterval(() => {
+chrome.runtime.sendMessage<ConnectionCheckRequest, ConnectionCheckResponse>(
+  { type: "connect" } as ConnectionCheckRequest,
+  (response) => {
+    changeConnectionStatus(response.isConnected);
+  }
+);
+// }, 1000);
+
 const roomInput = document.getElementById("roomInput")! as HTMLInputElement;
 chrome.storage.local.get("roomID", (items) => {
   roomInput.value = items.roomID ?? "";
@@ -17,7 +38,7 @@ document.getElementById("joinButton")?.addEventListener("click", () => {
   chrome.runtime.sendMessage<JoinRequest, JoinResponse>(
     { type: "join", roomID: roomID } as JoinRequest,
     (response) => {
-      console.log(response);
+      changeConnectionStatus(response.isConnected);
     }
   );
 });
