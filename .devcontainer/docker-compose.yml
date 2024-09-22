@@ -5,3 +5,13 @@ services:
     volumes:
       - ../:/workspace:cached
     command: /bin/sh -c "while sleep 1000; do :; done"
+  broker:
+    image: "eclipse-mosquitto:2.0.18"
+    volumes:
+      - "../broker/config:/mosquitto/config"
+      - "../broker/data:/mosquitto/data"
+      - "../broker/log:/mosquitto/log"
+    ports:
+      - "8083:8083"
+    user: "1000:1000"
+    restart: unless-stopped
