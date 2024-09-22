@@ -3,7 +3,8 @@ FROM node:22.9.0-bullseye-slim
 RUN apt update && \
     apt install -y \
     sudo \
-    git
+    git \
+    vim
 RUN echo 'node ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 COPY ./entrypoint.sh /entrypoint
