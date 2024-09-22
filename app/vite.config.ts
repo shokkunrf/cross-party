@@ -6,7 +6,7 @@ const manifest = defineManifest({
   name: "Cross Party",
   version: "1.0.0",
   description: "🥳Watch videos with friends🎉",
-  permissions: ["storage"],
+  permissions: ["storage", "tabs"],
   action: {
     default_popup: "src/popup/index.html",
   },
@@ -15,7 +15,7 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ["https://chatgpt.com/"],
+      matches: ["https://www.amazon.co.jp/gp/video/detail/*"],
       js: ["src/content/main.ts"],
     },
   ],
