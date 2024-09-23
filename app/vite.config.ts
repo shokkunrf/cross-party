@@ -7,8 +7,14 @@ const manifest = defineManifest({
   version: "0.0.1",
   description: "Watch PrimeVideo with friends🎉🎉🎉",
   permissions: ["storage", "tabs"],
+  icons: {
+    128: "src/icon.png",
+  },
   action: {
     default_popup: "src/popup/index.html",
+    default_icon: {
+      128: "src/icon.png",
+    },
   },
   background: {
     service_worker: "src/background/main.ts",
