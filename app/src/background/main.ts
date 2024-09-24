@@ -1,10 +1,15 @@
 import mqtt from "mqtt";
 
 const brokerUrl = import.meta.env.VITE_BROKER_URL as string;
-const clientId = import.meta.env.VITE_BROKER_CLIENT_ID as string;
 const username = import.meta.env.VITE_BROKER_USERNAME as string;
 const password = import.meta.env.VITE_BROKER_PASSWORD as string;
 const primevideoUrl = import.meta.env.VITE_PRIMEVIDEO_URL as string;
+
+function randomString(length: number): string {
+  return Math.random().toString(36).slice(-length);
+}
+
+const clientId = randomString(8);
 
 const client = mqtt.connect(brokerUrl, {
   clean: true,
@@ -30,7 +35,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 
-const userID = Math.random().toString(36).slice(-8);
+const userID = randomString(8);
 
 client.on("message", (topic, message) => {
   console.log("received: ", topic, message.toString());
