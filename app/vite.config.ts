@@ -4,7 +4,7 @@ import { crx, defineManifest } from "@crxjs/vite-plugin";
 const manifest = defineManifest({
   manifest_version: 3,
   name: "Cross Party",
-  version: "0.0.1",
+  version: "0.0.2",
   description: "Watch PrimeVideo with friends🎉🎉🎉",
   permissions: ["storage", "tabs"],
   icons: {
