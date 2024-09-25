@@ -80,11 +80,20 @@ async function switchResponse(
 ) {
   switch (request.type) {
     case "join":
-      topic = request.roomID;
-      if (!topic) {
+      if (!request.roomID) {
         sendResponse({ isConnected: false });
+        return;
+      }
+      if (topic === request.roomID) {
+        sendResponse({ isConnected: isConnected() });
+        return;
       }
 
+      if (topic) {
+        client.unsubscribe(topic);
+      }
+
+      topic = request.roomID;
       isSubscribed = await client
         .subscribeAsync(topic)
         .then((_) => {
