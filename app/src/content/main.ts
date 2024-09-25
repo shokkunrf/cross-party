@@ -77,6 +77,8 @@ chrome.runtime.onMessage.addListener(function (message) {
       if (targetVideo.currentTime !== message.time) {
         isReceivedSeekingMessage = true;
         targetVideo.currentTime = message.time;
+        targetVideo.play();
+        targetVideo.pause();
       }
       break;
     default:
