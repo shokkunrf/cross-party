@@ -25,16 +25,31 @@ const getting = setInterval(() => {
   }
 }, 2000);
 
+let isReceivedPlayingMessage = false;
 function onPlay() {
   console.log("===========play=");
+  if (isReceivedPlayingMessage) {
+    isReceivedPlayingMessage = false;
+    return;
+  }
   chrome.runtime.sendMessage({ type: "play" });
 }
+let isReceivedPausingMessage = false;
 function onPause() {
   console.log("===========pause=");
+  if (isReceivedPausingMessage) {
+    isReceivedPausingMessage = false;
+    return;
+  }
   chrome.runtime.sendMessage({ type: "pause" });
 }
+let isReceivedSeekingMessage = false;
 function onSeeked() {
   console.log("===========seeked=", targetVideo?.currentTime);
+  if (isReceivedSeekingMessage) {
+    isReceivedSeekingMessage = false;
+    return;
+  }
   chrome.runtime.sendMessage({
     type: "seek",
     time: targetVideo.currentTime,
@@ -45,15 +60,24 @@ chrome.runtime.onMessage.addListener(function (message) {
   switch (message.type) {
     case "play":
       console.log("===receive-play");
-      targetVideo.play();
+      if (targetVideo.paused) {
+        isReceivedPlayingMessage = true;
+        targetVideo.play();
+      }
       break;
     case "pause":
       console.log("===receive-pause");
-      targetVideo.pause();
+      if (!targetVideo.paused) {
+        isReceivedPausingMessage = true;
+        targetVideo.pause();
+      }
       break;
     case "seek":
-      console.log("===receive-seek", message.time);
-      targetVideo.currentTime = message.time;
+      console.log("===receive-seek", targetVideo.currentTime, message.time);
+      if (targetVideo.currentTime !== message.time) {
+        isReceivedSeekingMessage = true;
+        targetVideo.currentTime = message.time;
+      }
       break;
     default:
       break;
