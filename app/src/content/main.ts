@@ -3,24 +3,18 @@ console.log("===content.js");
 let targetVideo: HTMLVideoElement;
 const getting = setInterval(() => {
   const videoes = document.getElementsByTagName("video");
-  if (videoes.length !== 0) {
-    // targetVideo is the video that last fired "seeked" event
-    for (const video of videoes) {
-      video.addEventListener("seeked", (_) => {
-        if (targetVideo === video) {
-          return;
-        }
-        if (targetVideo) {
-          targetVideo.removeEventListener("play", onPlay);
-          targetVideo.removeEventListener("pause", onPause);
-          targetVideo.removeEventListener("seeked", onSeeked);
-        }
-        targetVideo = video;
-        targetVideo.addEventListener("play", onPlay);
-        targetVideo.addEventListener("pause", onPause);
-        targetVideo.addEventListener("seeked", onSeeked);
-      });
+
+  for (const video of videoes) {
+    if (video.currentSrc.includes("blob:")) {
+      targetVideo = video;
+      targetVideo.addEventListener("play", onPlay);
+      targetVideo.addEventListener("pause", onPause);
+      targetVideo.addEventListener("seeked", onSeeked);
+      break;
     }
+  }
+
+  if (targetVideo) {
     clearInterval(getting);
   }
 }, 2000);
