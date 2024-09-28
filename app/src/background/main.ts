@@ -1,10 +1,7 @@
 import mqtt from "mqtt";
+import { broker } from "../config/env";
+import { primevideoUrls } from "../config/target-host";
 import { main as content } from "../content/main";
-
-const brokerUrl = import.meta.env.VITE_BROKER_URL as string;
-const username = import.meta.env.VITE_BROKER_USERNAME as string;
-const password = import.meta.env.VITE_BROKER_PASSWORD as string;
-const primevideoUrl = import.meta.env.VITE_PRIMEVIDEO_URL as string;
 
 function randomString(length: number): string {
   return Math.random().toString(36).slice(-length);
@@ -12,13 +9,13 @@ function randomString(length: number): string {
 
 const clientId = randomString(8);
 
-const client = mqtt.connect(brokerUrl, {
+const client = mqtt.connect(broker.url, {
   clean: true,
   connectTimeout: 4000,
   // reconnectPeriod: 1000,
   clientId,
-  username,
-  password,
+  username: broker.username,
+  password: broker.password,
 });
 
 let tabIdState: number | undefined;
@@ -26,7 +23,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (
     changeInfo.status === "complete" &&
     tab.url &&
-    tab.url.indexOf(primevideoUrl) !== -1
+    primevideoUrls.some((url) => tab.url!.includes(url))
   ) {
     if (tabIdState !== tabId) {
       tabIdState = tabId;

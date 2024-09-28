@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { crx, defineManifest } from "@crxjs/vite-plugin";
+import { primevideoUrls } from "./src/config/target-host";
 
 const manifest = defineManifest({
   manifest_version: 3,
@@ -7,7 +8,7 @@ const manifest = defineManifest({
   version: "0.0.3",
   description: "Watch PrimeVideo with friends🎉🎉🎉",
   permissions: ["scripting", "storage", "tabs"],
-  host_permissions: ["https://www.amazon.co.jp/"],
+  host_permissions: primevideoUrls,
   icons: {
     128: "src/icon.png",
   },
