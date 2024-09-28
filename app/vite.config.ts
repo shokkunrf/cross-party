@@ -5,7 +5,7 @@ import { primevideoUrls } from "./src/config/target-host";
 const manifest = defineManifest({
   manifest_version: 3,
   name: "Cross Party",
-  version: "0.0.3",
+  version: "0.0.4",
   description: "Watch PrimeVideo with friends🎉🎉🎉",
   permissions: ["scripting", "storage", "tabs"],
   host_permissions: primevideoUrls,
