@@ -1,13 +1,11 @@
 import "./style.css";
 
 function changeConnectionStatus(isConnected: boolean) {
-  const status = document.getElementById("status")!;
+  const status = document.getElementById("status")! as HTMLImageElement;
   if (isConnected) {
-    status.innerText = "✅";
-    status.classList.add("checked");
+    status.src = "./connected.png";
   } else {
-    status.innerText = "❌";
-    status.classList.remove("checked");
+    status.src = "./disconnected.png";
   }
 }
 

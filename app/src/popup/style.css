@@ -52,11 +52,6 @@ button:hover {
 }
 
 #status {
-  font-size: 2rem;
-  border-radius: 1rem;
-  padding: 0.5rem;
-}
-
-.checked {
-  background-color: #46e;
+  width: 2rem;
+  height: 2rem;
 }
