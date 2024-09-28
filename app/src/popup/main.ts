@@ -10,14 +10,14 @@ function changeConnectionStatus(isConnected: boolean) {
 }
 
 // connection check
-// setInterval(() => {
-chrome.runtime.sendMessage<ConnectionCheckRequest, ConnectionCheckResponse>(
-  { type: "connect" } as ConnectionCheckRequest,
-  (response) => {
-    changeConnectionStatus(response.isConnected);
-  }
-);
-// }, 1000);
+setInterval(() => {
+  chrome.runtime.sendMessage<ConnectionCheckRequest, ConnectionCheckResponse>(
+    { type: "connect" } as ConnectionCheckRequest,
+    (response) => {
+      changeConnectionStatus(response.isConnected);
+    }
+  );
+}, 1000);
 
 const roomInput = document.getElementById("roomInput")! as HTMLInputElement;
 chrome.storage.local.get("roomID", (items) => {

@@ -81,6 +81,9 @@ async function switchResponse(
   switch (request.type) {
     case "join":
       if (!request.roomID) {
+        client.unsubscribe(topic);
+        topic = "";
+        isSubscribed = false;
         sendResponse({ isConnected: false });
         return;
       }
