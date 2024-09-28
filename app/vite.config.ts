@@ -6,7 +6,8 @@ const manifest = defineManifest({
   name: "Cross Party",
   version: "0.0.3",
   description: "Watch PrimeVideo with friends🎉🎉🎉",
-  permissions: ["storage", "tabs"],
+  permissions: ["scripting", "storage", "tabs"],
+  host_permissions: ["https://www.amazon.co.jp/"],
   icons: {
     128: "src/icon.png",
   },
@@ -19,12 +20,6 @@ const manifest = defineManifest({
   background: {
     service_worker: "src/background/main.ts",
   },
-  content_scripts: [
-    {
-      matches: ["https://www.amazon.co.jp/gp/video/detail/*"],
-      js: ["src/content/main.ts"],
-    },
-  ],
 });
 
 export default defineConfig({

@@ -1,4 +1,5 @@
 import mqtt from "mqtt";
+import { main as content } from "../content/main";
 
 const brokerUrl = import.meta.env.VITE_BROKER_URL as string;
 const username = import.meta.env.VITE_BROKER_USERNAME as string;
@@ -27,11 +28,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     tab.url &&
     tab.url.indexOf(primevideoUrl) !== -1
   ) {
-    console.log("tab updated2: ", tabId);
-    tabIdState = tabId;
-    // chrome.tabs.executeScript(tabId, { file: "../content/main.ts-loader.js" }, (res) => {
-    //   console.log("aaaaaaaaaa", res);
-    // });
+    if (tabIdState !== tabId) {
+      tabIdState = tabId;
+      chrome.scripting.executeScript({
+        target: { tabId },
+        func: content,
+      });
+    }
   }
 });
 
